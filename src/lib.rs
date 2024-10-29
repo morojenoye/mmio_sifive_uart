@@ -162,6 +162,15 @@ impl UART {
     }
 }
 
+impl core::fmt::Write for UART {
+    fn write_str(&mut self, s: &str) -> core::fmt::Result {
+        for byte in s.bytes() {
+            self.send_byte(byte).unwrap();
+        }
+        Ok(())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
